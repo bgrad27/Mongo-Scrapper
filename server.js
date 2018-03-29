@@ -1,7 +1,7 @@
 var cheerio = require("cheerio");
 var request = require("request");
 
-request("https://www.mlb.com/news/t-238068548", function(error, response, html) {
+request("https://www.nytimes.com/", function(error, response, html) {
 
 
   var $ = cheerio.load(html);
@@ -10,16 +10,40 @@ request("https://www.mlb.com/news/t-238068548", function(error, response, html) 
   var results = [];
 
 
-  $("h2.article-item_headline").each(function(i, element) {
+  $("h2.story-heading").each(function(i, element) {
 
-    var link = $(element).children().attr("href");
     var title = $(element).children().text();
 
     results.push({
       title: title,
-      link: link
+  
     });
+  
+  
   });
 
-  console.log(results);
+  // $("p.AssetContent").each(function(j, ){
+  //   var
+  // })
+
+ 
+
+  //Built an array to push my results from the summary into. Unfortunately I haven't been able to able to get the correct response back from the url.
+  var summaryArr = [];
+
+
+  $("p.summary").each(function(i, stuff) {
+
+    var summary = $(stuff).children().text();
+
+    summaryArr.push({
+      summary: summary,
+  
+    });
+  
+  
+  });
+
+  //console.log(results);
+  console.log(summaryArr);
 });
